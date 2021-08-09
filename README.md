@@ -19,6 +19,8 @@ A Arquitetura da api é MVC, com uma camada de serviços, uma camada de reposit�
 
 Os testes foram realizados atravez do PHPUnit usando as ferramentas fornecidas pelo próprio lumen.
 
+- Obs: Os testes apagam o banco.
+
 A checagem do saldo do usuário é feita após gravar as transações e atualizar os saldos, isso evita que duas transações concorrentes leem o saldo ao mesmo tempo e o usuário fique com saldo negativo.
 
 ## Uso
