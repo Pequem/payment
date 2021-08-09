@@ -29,5 +29,7 @@ RUN composer install
 COPY docker/start.sh /start.sh
 RUN chmod 700 /start.sh
 
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+
 EXPOSE 80
 CMD ["/start.sh"]

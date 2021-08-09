@@ -12,10 +12,10 @@ services:
         environment:
             WWWUSER: www-data
             LARAVEL_SAIL: 1
-        volumes:
+        #volumes:
            # - '.:/var/www/html'
            # - "./docker/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
-            - "./docker/000-default.conf:/etc/apache2/sites-available/000-default.conf"
+           # - "./docker/000-default.conf:/etc/apache2/sites-available/000-default.conf"
         networks:
             - payment
         depends_on:
