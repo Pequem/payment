@@ -25,5 +25,8 @@ COPY . /var/www/html
 
 RUN composer install
 
+COPY docker/start.sh /start.sh
+RUN chmod 700 /start.sh
+
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD ["/start.sh"]
