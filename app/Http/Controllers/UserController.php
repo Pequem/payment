@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Exception;
 use App\Interfaces\Services\IUserService;
+use App\Interfaces\Services\IUserBalanceService;
 use App\Exceptions\NotFoundEntityException;
 use App\Entities\UserEntity;
 
@@ -18,10 +18,14 @@ class UserController extends Controller
 
     // Service to users
     private $userService;
+    private $userBalanceService;
 
-    public function __construct(IUserService $userService)
-    {
+    public function __construct(
+        IUserService $userService,
+        IUserBalanceService $userBalanceService
+    ) {
         $this->userService = $userService;
+        $this->userBalanceService = $userBalanceService;
 
         // Fill user types availables
         $types = $this->userService->getTypes();
@@ -74,13 +78,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $userId)
     {
-        $userData = $request->validate($this->validationRules);
+        $validationRules = $this->validationRules;
+
+        $validationRules['cpf'] .= ',cpf,' . $userId;
+        $validationRules['cnpj'] .= ',cnpj,' . $userId;
+        $validationRules['email'] .= ',email,' . $userId;
+
+        $userData = $this->validate($request, $validationRules);
 
         try {
             $this->userService->update($userId, $this->createUserEntity($userData));
             return response('', 200);
         } catch (NotFoundEntityException $e) {
-            return response($e->getMessage(), 400);
+            return response($e->getMessage(), 404);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
         }
@@ -100,7 +110,27 @@ class UserController extends Controller
             }
             return response()->json($user);
         } catch (NotFoundEntityException $e) {
-            return response($e->getMessage(), 400);
+            return response($e->getMessage(), 404);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * Get user balance
+     *
+     * @return Response
+     */
+    public function getBalance($userId)
+    {
+        try {
+            $balance = $this->userBalanceService->get($userId);
+            if (!$balance) {
+                return response('', 404);
+            }
+            return response()->json($balance);
+        } catch (NotFoundEntityException $e) {
+            return response($e->getMessage(), 404);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
         }

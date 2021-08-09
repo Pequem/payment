@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Exception;
+use App\Repositories\TransactionRepository;
 use App\Interfaces\Services\IUserBalanceService;
 use App\Interfaces\Services\ITransactionService;
 use App\Interfaces\Services\INotificationService;
@@ -93,7 +93,8 @@ class TransactionService implements ITransactionService
                 null,
                 $payee->id,
                 $payer->id,
-                $amount
+                $amount,
+                TransactionRepository::TYPE_DEFAULT
             )
         );
     }
@@ -161,7 +162,8 @@ class TransactionService implements ITransactionService
                     null,
                     $payee->id,
                     null,
-                    $transactionEntity->amount
+                    $transactionEntity->amount,
+                    TransactionRepository::TYPE_ADD_FUNDS
                 )
             );
 
@@ -170,5 +172,17 @@ class TransactionService implements ITransactionService
             $this->transactionRepository->rollback();
             throw $e;
         }
+    }
+
+    /**
+     * Get user transaction history
+     *
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getAllByUser($userId): array
+    {
+        return $this->transactionRepository->getAllByUser($userId);
     }
 }

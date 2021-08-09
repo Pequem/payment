@@ -37,16 +37,7 @@ class UserService implements IUserService
             throw new NotFoundEntityException('Cant found user');
         }
 
-        return new UserEntity(
-            $user->id,
-            $user->first_name,
-            $user->last_name,
-            $user->cpf,
-            $user->cnpj,
-            $user->email,
-            $user->type,
-            ''
-        );
+        return $user;
     }
 
     /**

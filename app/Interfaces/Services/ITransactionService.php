@@ -8,4 +8,5 @@ interface ITransactionService
 {
     public function makeTransaction(TransactionEntity $transactionEntity);
     public function addFunds(TransactionEntity $transactionEntity);
+    public function getAllByUser($userId): array;
 }

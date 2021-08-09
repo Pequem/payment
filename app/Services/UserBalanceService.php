@@ -70,4 +70,16 @@ class UserBalanceService implements IUserBalanceService
 
         return false;
     }
+
+    /**
+     * Return balance of a user
+     *
+     * @param $userId
+     *
+     * @return UserBalanceEntity
+     */
+    public function get($userId): UserBalanceEntity
+    {
+        return $this->userBalanceRepository->getByUser($userId);
+    }
 }

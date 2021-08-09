@@ -92,4 +92,22 @@ class TransactionController extends Controller
             return response($e->getMessage(), 500);
         }
     }
+
+    /**
+     * Get transaction history for user
+     *
+     * @return Response
+     */
+    public function getHistoryByUser($userId)
+    {
+        try {
+            $transactions = $this->transactionService->getAllByUser($userId);
+
+            return response()->json($transactions);
+        } catch (NotFoundEntityException $e) {
+            return response($e->getMessage(), 404);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+    }
 }

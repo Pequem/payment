@@ -21,9 +21,11 @@ $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/{userId}', 'UserController@get');
     $router->post('/', 'UserController@create');
     $router->put('/{userId}', 'UserController@update');
+    $router->get('/balance/{userId}', 'UserController@getBalance');
 });
 
 $router->group(['prefix' => 'transaction'], function () use ($router) {
     $router->post('/', 'TransactionController@make');
     $router->post('/funds', 'TransactionController@addFunds');
+    $router->get('/history/{userId}', 'TransactionController@getHistoryByUser');
 });

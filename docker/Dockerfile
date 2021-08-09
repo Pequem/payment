@@ -22,6 +22,7 @@ COPY docker/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 WORKDIR /var/www/html
 
 COPY . /var/www/html
+RUN chown -R www-data /var/www/html/storage
 
 RUN composer install
 

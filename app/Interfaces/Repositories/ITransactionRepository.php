@@ -13,4 +13,5 @@ interface ITransactionRepository extends IBaseRepository
     public function persist(TransactionEntity $data): TransactionEntity;
     public function get($transactionId): TransactionEntity;
     public function getLastByPayer($payerId): TransactionEntity;
+    public function getAllByUser($userId): array;
 }

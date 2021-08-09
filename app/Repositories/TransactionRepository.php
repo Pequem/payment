@@ -26,7 +26,8 @@ class TransactionRepository extends BaseRepository implements ITransactionReposi
             [
                 'user_id_payee' => $transactionEntity->userIdPayee,
                 'user_id_payer' => $transactionEntity->userIdPayer,
-                'amount' => $transactionEntity->amount
+                'amount' => $transactionEntity->amount,
+                'type' => $transactionEntity->type
             ]
         );
 
@@ -85,5 +86,27 @@ class TransactionRepository extends BaseRepository implements ITransactionReposi
         );
 
         return $transactionEntity;
+    }
+
+    /**
+     * Get user transaction history
+     *
+     *  @param int $userId
+     *
+     *  @return array
+     */
+    public function getAllByUser($userId): array
+    {
+        $transactions = Transaction::where('user_id_payee', $userId)->orWhere('user_id_payer', $userId)->get();
+
+        return $transactions->map(function ($transaction) {
+            return new TransactionEntity(
+                $transaction->id,
+                $transaction->user_id_payee,
+                $transaction->user_id_payer,
+                $transaction->amount,
+                $transaction->type
+            );
+        })->toArray();
     }
 }

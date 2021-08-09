@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use Exception;
 use App\Models\UserBalance;
 use App\Interfaces\Repositories\IUserBalanceRepository;
+use App\Exceptions\NotFoundEntityException;
 use App\Entities\UserBalanceEntity;
 
 /**
@@ -19,7 +19,7 @@ class UserBalanceRepository extends BaseRepository implements IUserBalanceReposi
      * Save a user balance in database
      *
      * @param int $userId
-     * @param array $data
+     * @param UserBalanceEntity $data
      */
     public function persist($userBalanceId, UserBalanceEntity $data): UserBalanceEntity
     {
@@ -28,7 +28,7 @@ class UserBalanceRepository extends BaseRepository implements IUserBalanceReposi
         if ($userBalanceId) {
             $userBalance = UserBalance::find($userBalanceId);
             if (!$userBalance) {
-                throw new Exception('User balance not found');
+                throw new NotFoundEntityException('User balance not found');
             }
         }
 
@@ -47,16 +47,34 @@ class UserBalanceRepository extends BaseRepository implements IUserBalanceReposi
     /**
      * Get a user balance
      *
-     * @param int $userId
+     * @param int $userBalanceId
      *
-     * @return array $userData
+     * @return UserBalanceEntity $userData
      */
     public function get($userBalanceId): UserBalanceEntity
     {
         $userBalance = UserBalance::find($userBalanceId);
 
         if (!$userBalance) {
-            throw new Exception('User balance not found');
+            throw new NotFoundEntityException('User balance not found');
+        }
+
+        return new UserBalanceEntity($userBalance->id, $userBalance->user_id, $userBalance->balance);
+    }
+
+    /**
+     * Get a balance by user
+     *
+     * @param int $userId
+     *
+     * @return UserBalanceEntity
+     */
+    public function getByUser($userId): UserBalanceEntity
+    {
+        $userBalance = UserBalance::where('user_id', $userId)->first();
+
+        if (!$userBalance) {
+            throw new NotFoundEntityException('User balance not found');
         }
 
         return new UserBalanceEntity($userBalance->id, $userBalance->user_id, $userBalance->balance);
