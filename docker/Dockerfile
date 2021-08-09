@@ -16,10 +16,14 @@ RUN docker-php-ext-enable xdebug
 RUN pecl channel-update https://pecl.php.net/channel.xml \
     && pecl install swoole
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/php.ini /etc/php/8.0/cli/conf.d/99-sail.ini
 
 WORKDIR /var/www/html
+
+COPY . /var/www/html
+
+RUN composer install
 
 EXPOSE 80
 CMD ["apache2-foreground"]

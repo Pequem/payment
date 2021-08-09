@@ -2,7 +2,7 @@
 
 ## Rodar
 
-Basta utilizar o docker e rodar o "docker-compose up -d" na pasta do projeto.
+Basta utilizar o docker e rodar o "docker-compose up -d --build" na pasta do projeto.
 
 ## Sobre
 
