@@ -4,18 +4,18 @@
 
 Basta utilizar o docker e rodar o "docker-compose up -d --build" na pasta do projeto.
 
-- Durante o start o container web espera 20 segundos para dar tempo do mysql criar o banco antes de rodar as migrations, mas pode ocorrer de o MySQL ainda não ter criado o banco, então reinicie o container da web caso isso ocorra.
+- Durante o start, o container web espera 20 segundos para dar tempo do mysql criar o Schema antes de rodar as migrations, pois mesmo colocando o web como dependente do mysql no docker-compose, o web não espera o MySQL criar o Schema, mas pode ocorrer de o MySQL ainda não ter criado o Schema, então reinicie o container da web caso isso ocorra.
 - Tentei deixar o processo de inicio mais suável possível.
 
 ## Sobre
 
 A APP foi desenvolvida em Lumen, por se tratar de uma microframework que possui um bom desempenho, o banco utilizado foi o MySQL devido a necessidade de trabalhar com Transaction e ter uma estrutura relacional.
 
-No Banco existe uma tabela de transação e uma tabela de balanço que armazena o saldo atual de cada usuário, a tabela de balanço é necessária para otimizar a velocidade das transações, pois calcular o saldo do usuário a cada nova transação seria muito custoso.
+No Banco existe uma tabela de transações e uma tabela de balanços que armazena o saldo atual de cada usuário, a tabela de balanço é necessária para otimizar a velocidade das transações, pois calcular o saldo do usuário a cada nova transação seria muito custoso.
 
-A notificação é feita atravez de JOBs em background, para realizar o desacoplamento da transação e evitar problemas de atraso na resposta da transação caso o serviço esteja indisponível.
+A notificação é feita atravez de JOB's em background, para realizar o desacoplamento da transação e evitar problemas de atraso na resposta da transação caso o serviço esteja indisponível.
 
-A Arquitetura da api é MVC, com uma camada de serviço, uma camada de repositório e entidades para tranferencia de dados entre camadas. Foi seguido os padrões do solid.
+A Arquitetura da api é MVC, com uma camada de serviços, uma camada de repositórios e entidades para tranferencia de dados entre as camadas. Foi seguido os princípios do SOLID.
 
 Os testes foram realizados atravez do PHPUnit usando as ferramentas fornecidas pelo próprio lumen.
 
