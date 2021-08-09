@@ -50,7 +50,7 @@ Response 201
 
 ### Atualiza usuário
 
-PUT /user
+GET /user
 
 Request
 

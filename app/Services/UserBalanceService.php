@@ -62,7 +62,7 @@ class UserBalanceService implements IUserBalanceService
      */
     public function hasBalance($userId): bool
     {
-        $balance = $this->userBalanceRepository->get($userId);
+        $balance = $this->userBalanceRepository->getByUser($userId);
 
         if ($balance->balance >= 0) {
             return true;
