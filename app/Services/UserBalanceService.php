@@ -41,7 +41,7 @@ class UserBalanceService implements IUserBalanceService
      */
     public function add($userId, $amount)
     {
-        $balance = $this->userBalanceRepository->get($userId);
+        $balance = $this->userBalanceRepository->getByUser($userId);
 
         $this->userBalanceRepository->persist(
             $userId,
