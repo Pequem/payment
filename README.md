@@ -29,7 +29,7 @@ A checagem do saldo do usuário é feita após gravar as transações e atualiza
 
 POST /user
 
-Response 201
+Request
 
 ```json
 {
@@ -46,11 +46,83 @@ Response 201
 - O CPF e CNPJ não precisam estar presentes ao mesmo tempo.
 - Para usuários comuns o tipo é default e para lojistas é store.
 
+Response 201
+
+### Atualiza usuário
+
+PUT /user
+
+Request
+
+```json
+{
+    "first_name": "",
+    "last_name": "",
+    "cnpj":"",
+    "cpf":"",
+    "email":"",
+    "password":"",
+    "type": ""
+}
+```
+
+Response 201
+
+### Consulta usuário
+
+PUT /user/1
+
+Response
+
+```json
+{
+    "id": 1,
+    "firstName": "",
+    "lastName": "",
+    "cpf": "",
+    "cnpj": null,
+    "email": "",
+    "type": "",
+}
+```
+
+### Consulta as transações do usuário
+
+GET /transaction/history/1
+
+Response
+
+```json
+[
+    {
+        "id": 1,
+        "userIdPayee": 1,
+        "userIdPayer": null,
+        "amount": 1000.65,
+        "type": "default"
+    }
+]
+```
+
+### Consulta o saldo do usuário
+
+GET /user/balance/1
+
+Response
+
+```json
+{
+    "id": 1,
+    "userId": 1,
+    "balance": 1000.65
+}
+```
+
 ### Adicionar fundos a carteira do usuário
 
 POST /transaction/funds
 
-Reponse 201
+Resquest
 
 ```json
 {
@@ -59,11 +131,13 @@ Reponse 201
 }
 ```
 
+Reponse 201
+
 ### Realizar uma transação
 
 POST /transaction
 
-Response 201
+Request
 
 ```json
 {
@@ -72,3 +146,5 @@ Response 201
     "value": 800
 }
 ```
+
+Response 201
