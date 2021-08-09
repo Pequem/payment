@@ -27,7 +27,7 @@ class UserService implements IUserService
      *
      * @param int $userId
      *
-     * @return array $userData
+     * @return UserEntity $userData
      */
     public function get($userId): UserEntity
     {
