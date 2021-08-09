@@ -4,6 +4,8 @@
 
 Basta utilizar o docker e rodar o "docker-compose up -d --build" na pasta do projeto.
 
+- Durante o start o container web espera 20 segundos para dar tempo do mysql criar o banco antes de rodar as migrations, mas pode ocorrer de o MySQL ainda não ter criado o banco, então reinicie o container da web caso isso ocorra.
+
 ## Sobre
 
 A APP foi desenvolvida em Lumen, por se tratar de uma microframework que possui um bom desempenho, o banco utilizado foi o MySQL devido a necessidade de trabalhar com Transaction e ter uma estrutura relacional.
