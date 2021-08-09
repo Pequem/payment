@@ -126,8 +126,8 @@ class TransactionService implements ITransactionService
 
             $transaction = $this->registrerTransaction($payee, $payer, $transactionEntity->amount);
 
-            // Aqui eu verifico o saldo depois, evita o caso que apareça outra transferencia
-            // antes dessa atualizar o saldo e o usuário não tinha saldo para as duas
+            // Aqui eu verifico o saldo depois, para evitar o caso de aparecer outra transferencia
+            // antes dessa atualizar o saldo e o usuário não ter saldo para as duas
             // transferencias
             if (!$this->userBalanceService->hasBalance($payer->id)) {
                 throw new TransactionDeniedException('There is no balance');

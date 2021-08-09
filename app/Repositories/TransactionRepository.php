@@ -39,7 +39,7 @@ class TransactionRepository extends BaseRepository implements ITransactionReposi
     }
 
     /**
-     * Get a user
+     * Get a transaction
      *
      * @param int $transactionId
      *
