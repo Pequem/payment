@@ -44,7 +44,7 @@ class UserBalanceService implements IUserBalanceService
         $balance = $this->userBalanceRepository->getByUser($userId);
 
         $this->userBalanceRepository->persist(
-            $userId,
+            $balance->id,
             new UserBalanceEntity(
                 null,
                 $userId,
